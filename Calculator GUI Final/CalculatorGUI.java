@@ -37,9 +37,9 @@ public class CalculatorGUI {
     private static JLabel textBox;
 
     //Used in calculation
-    private String a = "";
-    private String b = "";
-    private String c = "";
+    private String a = "";              //stored as a string so I can concatenate easier with +=
+    private String b = "";              //^
+    private String c = "";              //kind of a useless variable since the math can be done inside the textbox.setText line, but whatever
     private String aOrb = "a";          //weird work around to have operators switch which variable is being worked on
     private String operation = "";      //stores the most recent operation
 
@@ -71,11 +71,11 @@ public class CalculatorGUI {
         // panel.add(button1);
 
         //LARGE BUTTON SETUP, ALL THE SAME, JUST SKIM THROUGH
-        btZero = new JButton(new ImageIcon("images/zero.png"));
-        btZero.setBounds(2, 257, 101, 50);
-        btZero.setBorder(BorderFactory.createEmptyBorder());
-        btZero.setFocusable(false);
-        panel.add(btZero, Integer.valueOf(1));
+        btZero = new JButton(new ImageIcon("images/zero.png"));         //creates new button that looks like the specified image
+        btZero.setBounds(2, 257, 101, 50);                              //sets the bounds where it can be clicked (x, y, width, height)
+        btZero.setBorder(BorderFactory.createEmptyBorder());            //makes an empty border cause the default one is gross
+        btZero.setFocusable(false);                                     //removes the dotted border that appears when you click something
+        panel.add(btZero, Integer.valueOf(1));                          //adds the button to the panel, couldn't exist otherwise
 
         btPeriod = new JButton(new ImageIcon("images/period.png"));
         btPeriod.setBounds(104, 257, 50, 50);
@@ -222,6 +222,7 @@ public class CalculatorGUI {
         frame.setVisible(true);
     }
 
+    //class in a class that handles button actions
     private class ActionManager implements ActionListener
     {
         @Override
@@ -235,7 +236,7 @@ public class CalculatorGUI {
                 a = "";
                 b = "";
                 c = "";
-                //System.out.println("testing clearing");       //debug
+                //System.out.println("testing clearing");               //debug
             }
             //BUTTON 0
             else if(e.getSource() == btZero)
@@ -245,7 +246,8 @@ public class CalculatorGUI {
                     operation = "";
                     textBox.setText("");
                 }
-                if(aOrb == "a" && textBox.getText().length() < 14)
+                //decides which variable to work on
+                if(aOrb == "a" && textBox.getText().length() < 14)      //14 is how many spaces are available in the box
                 {
                     textBox.setText(textBox.getText() + 0);
                     a += "0";
@@ -449,6 +451,10 @@ public class CalculatorGUI {
                 }
             }
             //BUTTON PLUS
+            //clears the text, 
+            //sets aOrb to b if the variable being worked on was a,
+            //sets operation to the button's operation
+            //SAME FOR ALL OPERATION BUTTONS
             else if(e.getSource() == btPlus && a != "")             //code breaks if you try an operation when a is an empty string
             {
                 textBox.setText("");
